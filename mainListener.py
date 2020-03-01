@@ -1,10 +1,11 @@
 import SocketManager
 from CallCenter import CallCenter
 import uuid
+import base64
 
 sm = SocketManager.SocketManager()
 cc = CallCenter()
-lines = ["line_1", "line_2", "line_3"]
+lines = ["line_01", "line_02", "line_03"]
 
 cc.lineQueueInitiator(lines)
 
@@ -27,6 +28,7 @@ while True:
         if not data:
             break
         buffer += data
+        print(data.__len__())
         # write data to a file
         # f.write(data)
         #audio = sr.AudioData(data,16000,2)
@@ -40,5 +42,7 @@ while True:
     #     "VoiceData": buffer
     # }
     _tempdData = buffer
-    cc.pushToQueue(lines[0], str(_tempData))
+    _tempdData = base64.b64encode(_tempdData)
+    cc.pushToQueue(lines[0], _tempdData)
     textxx = cc.getFromQueue(lines[0])
+    

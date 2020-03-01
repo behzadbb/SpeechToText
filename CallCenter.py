@@ -1,7 +1,6 @@
 import pika
 from SpeechToText import SpeechToText
-import pandas as pd
-import json
+import base64
 
 class CallCenter:
     def lineQueueInitiator(self, lines):
@@ -24,12 +23,9 @@ class CallCenter:
         channel = connection.channel()
         
         def callback(ch, method, properties, body):
-            ssaw = body.decode('utf-8')
-            ssssss = json.loads(ssaw)
-            _tempData = pd.read_json(body,)
-            nnn = _tempData["VoiceData"]
+            _tempData = base64.b64decode(body)
             stt = SpeechToText()
-            text = stt.speechToText(nnn)
+            text = stt.speechToText(_tempData)
             print(text)
             
         channel.basic_consume(queue=line, auto_ack=True, on_message_callback=callback)
