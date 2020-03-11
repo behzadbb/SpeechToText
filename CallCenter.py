@@ -26,9 +26,8 @@ class CallCenter:
             _tempData = base64.b64decode(body)
             stt = SpeechToText()
             text = stt.speechToText(_tempData)
-            print(text)
+            print("\n",text,"\n")
             
         channel.basic_consume(queue=line, auto_ack=True, on_message_callback=callback)
 
         channel.start_consuming()
-        return "0"

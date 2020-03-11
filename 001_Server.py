@@ -25,9 +25,9 @@ while True:
     
 	try:
 		client_socket.sendall(stream.read(chunk))
-	except IOError,e:
+	except (IOError,e):
 		if e[1] == pyaudio.paInputOverflowed: 
-			print e 
+			print (e)
 			x = '\x00'*16*256*2 #value*format*chunk*nb_channels 
 
 stream.stop_stream()
